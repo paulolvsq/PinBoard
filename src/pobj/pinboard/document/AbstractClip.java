@@ -38,6 +38,14 @@ public class AbstractClip {
 	public double getRight() {
 		return this.right;
 	}
+	
+	public double getWidth() {
+		return this.right - this.left;
+	}
+	
+	public double getHeight() {
+		return this.bottom - this.top;
+	}
 
 	public void setGeometry(double left, double top, double right, double bottom) {
 		this.left = left;
@@ -47,10 +55,10 @@ public class AbstractClip {
 	}
 
 	public void move(double x, double y) {
-		this.top = this.top + y;
-		this.bottom = this.bottom + y;
-		this.left = this.left + x;
-		this.right = this.right + x;
+		this.top += y;
+		this.bottom += y;
+		this.left += x;
+		this.right += x;
 	}
 
 	public boolean isSelected(double x, double y) {
