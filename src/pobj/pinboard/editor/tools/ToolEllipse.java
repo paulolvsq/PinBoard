@@ -42,6 +42,7 @@ public class ToolEllipse implements Tool {
 		if(relacheX == x1 || relacheY == y1) return;
 		ellipse = new ClipEllipse(Math.min(x1, relacheX), Math.min(y1, relacheY), Math.max(x1, relacheX), Math.max(y1, relacheY), color);
 		b.addClip(ellipse);
+		ellipse = null;
 		verif = false;
 	}
 
@@ -49,7 +50,8 @@ public class ToolEllipse implements Tool {
 	public void drawFeedback(EditorInterface i, GraphicsContext gc) {
 		if(verif) {
 			ellipse = new ClipEllipse(Math.min(x1, x2), Math.min(y1, y2), Math.abs(x2-x1), Math.abs(y2-y1), i.getBoard().getColor());
-			ellipse.draw(gc);	
+			ellipse.draw(gc);
+			//gc.fillOval(Math.min(x1, x2), Math.min(y1, y2), Math.abs(x2-x1), Math.abs(y2-y1));
 		}
 	}
 
