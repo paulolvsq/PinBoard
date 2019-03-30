@@ -1,6 +1,8 @@
 package pobj.pinboard.editor;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -18,6 +20,8 @@ import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import pobj.pinboard.document.Board;
+import pobj.pinboard.document.Clip;
+import pobj.pinboard.document.ClipGroup;
 import pobj.pinboard.editor.tools.Tool;
 import pobj.pinboard.editor.tools.ToolEllipse;
 import pobj.pinboard.editor.tools.ToolImage;
@@ -33,7 +37,7 @@ public class EditorWindow implements EditorInterface, ClipboardListener {
 	private ToolBar toolbar;
 	private Label barre;
 	private Canvas canvas;
-	private Selection selection;
+	private Selection selection = new Selection();
 	private Menu file = new Menu("File");
 	private Menu edit = new Menu("Edit");
 	private Menu tools = new Menu("Tools");
@@ -45,9 +49,12 @@ public class EditorWindow implements EditorInterface, ClipboardListener {
 	private MenuItem ellipse = new MenuItem("Ellipse");
 	private MenuItem paste = new MenuItem("Paste");
 	private MenuItem delete = new MenuItem("Delete");
+	private MenuItem group = new MenuItem("Group");
+	private MenuItem ungroup = new MenuItem("Ungroup");
 
 	public EditorWindow(Stage stage) {
 		this.stage = stage;
+		configurerCanvas();
 		board = new Board();
 
 		stage.setTitle("PinBoard");
@@ -58,17 +65,15 @@ public class EditorWindow implements EditorInterface, ClipboardListener {
 		configurerToolBar();
 
 		//je crée la barre de label
-		barre = new Label("pas encore rempli");
-
-		configurerCanvas();
+		barre = new Label("Empty");
 
 		//j'ajoute tous les éléments dans la vbox
 		vbox.getChildren().addAll(menubar, toolbar, canvas, separator, barre);
 
 		//je crée la scène à partir de la VBox et j'affiche 
 		Scene scene = new Scene(vbox);
-		stage.setScene(scene);
-		stage.show();
+		this.stage.setScene(scene);
+		this.stage.show();
 		Clipboard.getInstance().addListener(this);
 		Clipboard.getInstance().clipboardChanged();
 	}
@@ -118,6 +123,24 @@ public class EditorWindow implements EditorInterface, ClipboardListener {
 			board.removeClip(selection.getContents());
 			board.draw(canvas.getGraphicsContext2D());
 		});
+		group.setOnAction( (e) -> {
+			selection.clear(); //ôter les éléments sélectionnés
+			ClipGroup c = new ClipGroup(); //créer un nouveau groupe
+			for(Clip clip : board.getContents()) c.addClip(clip); //ajouter les éléments sélectionnés au groupe
+			board.removeClip(board.getContents()); //on supprime les anciens éléments de la planche
+			board.addClip(c); //on ajoute le groupe de clip à la planche
+		});
+		ungroup.setOnAction( (e) -> {
+			selection.clear(); //on supprime les éléments sélectionnés
+			List<ClipGroup> groupes = new ArrayList<>(); //on crée une nouvelle liste de groupes de clip
+			for(Clip clip : board.getContents()) {
+				if(clip instanceof ClipGroup) { //on regarde dans le contenu de la planche s'il y a des groupes de Clip
+					board.addClip(((ClipGroup) clip).getClips()); //on ajoute tous les clips du groupe de clip
+					board.removeClip(clip); //on supprime le groupe de clip
+					board.addClip(clip); //on ajoute en dernier le groupe de clip complet
+				}
+			}
+		});
 
 		edit.getItems().addAll(copy, paste, delete);
 		file.getItems().addAll(newF, close);
@@ -149,8 +172,12 @@ public class EditorWindow implements EditorInterface, ClipboardListener {
 			courant = new ToolEllipse();
 			barre.setText(courant.getName(this));
 		});
-		reset.setOnAction( (e) -> {
+		reset.setOnAction( (e) -> { //rien n'est vraiment effacé quelque soit la méthode utilisée -> les figures sont gardées en mémoire quelque part
 			canvas.getGraphicsContext2D().clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+			//canvas = new Canvas(canvas.getWidth(), canvas.getHeight());
+			//canvas.getGraphicsContext2D().clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+			//canvas.getGraphicsContext2D().setFill(Color.WHITE);
+			//canvas.getGraphicsContext2D().fillRect(0.0, 0.0, canvas.getWidth(), canvas.getHeight());
 		});
 		img.setOnAction( (e) -> {
 			FileChooser file = new FileChooser();

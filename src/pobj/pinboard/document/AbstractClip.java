@@ -18,11 +18,6 @@ public class AbstractClip {
 		this.color = color;
 	}
 
-	/*public void draw(GraphicsContext ctx) {
-		ctx.setFill(color);
-		ctx.fillRect(left, top, right, bottom);
-	}*/
-
 	public double getTop() {
 		return this.top;
 	}

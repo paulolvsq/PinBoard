@@ -52,16 +52,24 @@ public class ToolImage implements Tool {
 		} catch (IOException e1) {
 			e1.getMessage();
 		}
+		b.addClip(image);
 		image = null;
 		verif = false;
 	}
 
 	@Override
 	public void drawFeedback(EditorInterface i, GraphicsContext gc) {
+		i.getBoard().draw(gc);
 		if(verif) {
 			//image = new ClipImage(image.getLeft(), image.getTop(), Math.abs(image.getLeft() - image.getRight()), Math.abs(image.getBottom() - image.getTop()));
+			/*try {
+				image = new ClipImage(image.getLeft(), image.getTop(), file);
+			} catch (IOException e) {
+				e.getMessage();
+			}*/
+			//image.draw(gc);
+
 			gc.strokeRect(image.getLeft(), image.getTop(), Math.abs(image.getLeft() - image.getRight()), Math.abs(image.getBottom() - image.getTop()));
-			i.getBoard().draw(gc);
 		}
 	}
 
@@ -71,3 +79,5 @@ public class ToolImage implements Tool {
 	}
 
 }
+
+

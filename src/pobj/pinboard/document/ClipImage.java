@@ -23,7 +23,7 @@ public class ClipImage implements Clip {
 
 	@Override
 	public void draw(GraphicsContext ctx) {
-		ctx.drawImage(image, left, top);
+		ctx.drawImage(this.image, this.left, this.top);
 	}
 
 	@Override
@@ -38,12 +38,12 @@ public class ClipImage implements Clip {
 
 	@Override
 	public double getBottom() {
-		return this.top + image.getHeight();
+		return this.top + this.image.getHeight();
 	}
 
 	@Override
 	public double getRight() {
-		return this.left + image.getWidth();
+		return this.left + this.image.getWidth();
 	}
 
 	@Override

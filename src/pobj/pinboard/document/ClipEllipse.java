@@ -17,14 +17,14 @@ public class ClipEllipse extends AbstractClip implements Clip {
 	@Override
 	public void draw(GraphicsContext ctx) {
 		ctx.setFill(this.getColor());
-		ctx.fillOval(this.getLeft(), this.getTop(), this.getRight(), this.getBottom());
+		ctx.fillOval(this.getLeft(), this.getTop(), this.getWidth(), this.getHeight());
 	}
 	
 	public boolean isSelected(double x, double y) {
 		double cx = (this.getLeft() + this.getRight())/2.;
 		double cy = (this.getTop() + this.getBottom())/2.;
-		double rx = (this.getRight() - this.getLeft())/2.;
-		double ry = (this.getBottom() - this.getTop())/2.;
+		double rx = (this.getLeft() - this.getRight())/2.;
+		double ry = (this.getTop() - this.getBottom())/2.;
 		double tmpX = ((x - cx)/rx)*((x - cx)/rx);
 		double tmpY = ((y - cy)/ry)*((y - cy)/ry);
 		return tmpX + tmpY <= 1;

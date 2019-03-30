@@ -7,8 +7,8 @@ import pobj.pinboard.editor.EditorInterface;
 
 public class ToolSelection implements Tool {
 	
-	double x;
-	double y;
+	private double x;
+	private double y;
 	
 	@Override
 	public void press(EditorInterface i, MouseEvent e) {
@@ -22,7 +22,7 @@ public class ToolSelection implements Tool {
 	public void drag(EditorInterface i, MouseEvent e) {
 		double decalageX = e.getX();
 		double decalageY = e.getY();
-		for(Clip c : i.getBoard().getContents()) {
+		for(Clip c : i.getSelection().getContents()) {
 			c.move(decalageX - x, decalageY - y);
 		}
 		x = e.getX();
@@ -36,6 +36,7 @@ public class ToolSelection implements Tool {
 	
 	@Override
 	public void drawFeedback(EditorInterface i, GraphicsContext gc) {
+		i.getBoard().draw(gc);
 		i.getSelection().drawFeedback(gc);
 	}
 	

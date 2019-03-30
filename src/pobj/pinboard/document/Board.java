@@ -21,14 +21,14 @@ public class Board implements Clip {
 		double height = ctx.getCanvas().getHeight();
 		double width = ctx.getCanvas().getWidth();
 		ctx.setFill(Color.WHITE);
-		ctx.fillRect(0.0, 0.0, height, width);
+		ctx.fillRect(0.0, 0.0, width, height);
 		for(Clip c : conteneur)
 			c.draw(ctx);
 	}
 
 	@Override
 	public double getTop() {
-		return 0.0;
+		return 0;
 	}
 
 	@Override
@@ -43,7 +43,7 @@ public class Board implements Clip {
 
 	@Override
 	public double getRight() {
-		return 0.0;
+		return 0;
 	}
 
 	@Override
@@ -104,7 +104,6 @@ public class Board implements Clip {
 		for(Clip c : clip)
 			this.conteneur.remove(c);
 	}
-	
 	
 	
 }
