@@ -77,6 +77,7 @@ import javafx.scene.paint.Color;
 import pobj.pinboard.document.Board;
 import pobj.pinboard.document.ClipRect;
 import pobj.pinboard.editor.EditorInterface;
+import pobj.pinboard.editor.commands.CommandAdd;
 
 public class ToolRect implements Tool {
 	double pressedX, pressedY, lastDragX, lastDragY;
@@ -110,7 +111,7 @@ public class ToolRect implements Tool {
 			rect = new ClipRect(Math.min(pressedX, releaseX), Math.min(pressedY,releaseY),
 					Math.max(pressedX, releaseX), Math.max(pressedY,releaseY), c);
 			b.addClip(rect);
-			//i.getUndoStack().addCommand(new CommandAdd(i, rect));
+			i.getUndoStack().addCommand(new CommandAdd(i, rect));
 			rect = null;
 		}
 		holding = false;

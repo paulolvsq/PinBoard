@@ -9,11 +9,10 @@ import pobj.pinboard.editor.EditorInterface;
 public class CommandAdd implements Command {
 	
 	private EditorInterface editor;
-	private List<Clip> toAdd;
+	private List<Clip> toAdd = new ArrayList<>();
 	
 	public CommandAdd(EditorInterface editor, Clip toAdd) {
 		this.editor = editor;
-		this.toAdd = new ArrayList<>();
 		this.toAdd.add(toAdd);
 	}
 	

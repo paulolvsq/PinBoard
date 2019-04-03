@@ -8,6 +8,7 @@ import javafx.scene.input.MouseEvent;
 import pobj.pinboard.document.Board;
 import pobj.pinboard.document.ClipImage;
 import pobj.pinboard.editor.EditorInterface;
+import pobj.pinboard.editor.commands.CommandAdd;
 
 public class ToolImage implements Tool {
 	
@@ -53,6 +54,7 @@ public class ToolImage implements Tool {
 			e1.getMessage();
 		}
 		b.addClip(image);
+		i.getUndoStack().addCommand(new CommandAdd(i, image));
 		image = null;
 		verif = false;
 	}

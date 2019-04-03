@@ -4,6 +4,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
 import pobj.pinboard.document.Clip;
 import pobj.pinboard.editor.EditorInterface;
+import pobj.pinboard.editor.commands.CommandMove;
 
 public class ToolSelection implements Tool {
 	
@@ -22,6 +23,7 @@ public class ToolSelection implements Tool {
 	public void drag(EditorInterface i, MouseEvent e) {
 		double decalageX = e.getX();
 		double decalageY = e.getY();
+		i.getUndoStack().addCommand(new CommandMove(i, i.getSelection().getContents(), decalageX - x, decalageY - y));
 		for(Clip c : i.getSelection().getContents()) {
 			c.move(decalageX - x, decalageY - y);
 		}

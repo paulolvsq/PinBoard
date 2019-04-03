@@ -6,6 +6,7 @@ import javafx.scene.paint.Color;
 import pobj.pinboard.document.Board;
 import pobj.pinboard.document.ClipEllipse;
 import pobj.pinboard.editor.EditorInterface;
+import pobj.pinboard.editor.commands.CommandAdd;
 
 public class ToolEllipse implements Tool {
 
@@ -43,6 +44,7 @@ public class ToolEllipse implements Tool {
 		else {
 			ellipse = new ClipEllipse(Math.min(x1, relacheX), Math.min(y1, relacheY), Math.max(x1, relacheX), Math.max(y1, relacheY), color);
 			b.addClip(ellipse);
+			i.getUndoStack().addCommand(new CommandAdd(i, ellipse));
 			ellipse = null;
 		}
 		verif = false;
