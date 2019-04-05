@@ -166,7 +166,7 @@ public class EditorWindow implements EditorInterface, ClipboardListener {
 		redo.setOnAction( (e) -> {
 			commands.redo();
 		});
-		save.setOnAction( (e) -> {
+		save.setOnAction( (e) -> { //je n'ai pas utilisé les outils proposés dans le tme pour la sauvegarde d'une image
 			FileChooser fc = new FileChooser();
 			FileChooser.ExtensionFilter ef = new FileChooser.ExtensionFilter("Image files", "*.jpg", "*.jpeg", "*.png", "*.gif", "*.svg");
 			fc.getExtensionFilters().add(ef);
@@ -182,7 +182,7 @@ public class EditorWindow implements EditorInterface, ClipboardListener {
 				}
 			}
 		});
-		open.setOnAction( (e) -> {
+		open.setOnAction( (e) -> { //ne fonctionne pas correctement
 			FileChooser fc = new FileChooser();
 			FileChooser.ExtensionFilter ef = new FileChooser.ExtensionFilter("Image files", "*.jpg", "*.jpeg", "*.png", "*.gif", "*.svg");
 			fc.getExtensionFilters().add(ef);
